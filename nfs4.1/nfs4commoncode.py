@@ -43,7 +43,7 @@ def %(encode_status)s_by_name(name, status, *args, **kwargs):
         if tag:
             result.tag = tag
         return result
-    except StandardError:
+    except Exception:
         raise
         pass
     raise RuntimeError("Problem with name %%r" %% name)

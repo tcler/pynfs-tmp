@@ -350,7 +350,7 @@ class ClientRecord(object):
                         state.delete()
                     # STUB - what about LAYOUT?
                     # STUB - config whether DELEG OK or not
-            except StandardError as e:
+            except Exception as e:
                 log_41.exception("Ignoring problem during state removal")
         self.state = {}
         self.lastused = time.time()
@@ -837,7 +837,7 @@ class NFS4Server(rpc.Server):
                 except NFS4Replay:
                     # Just pass this on up
                     raise
-                except StandardError:
+                except Exception:
                     # Uh-oh.  This is a server bug
                     traceback.print_exc()
                     result = encode_status_by_name(opname.lower()[3:],
