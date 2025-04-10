@@ -535,8 +535,8 @@ class SessionRecord(object):
         return res
 
     def compound(self, ops, **kwargs):
-        max_retries = 10
-        delay_time = 1
+        max_retries = kwargs.pop('max_retries', 10)
+        delay_time = kwargs.pop('delay_time', 1)
         handle_state_errors = kwargs.pop("handle_state_errors", True)
         saved_kwargs = kwargs
         do_prepare = True
