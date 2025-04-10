@@ -539,17 +539,21 @@ class SessionRecord(object):
         delay_time = 1
         handle_state_errors = kwargs.pop("handle_state_errors", True)
         saved_kwargs = kwargs
-        slot, seq_op = self._prepare_compound(kwargs)
+        do_prepare = True
         for item in range(max_retries):
+            if do_prepare:
+                slot, seq_op = self._prepare_compound(saved_kwargs)
             res = self.c.compound([seq_op] + ops, **kwargs)
             res = self.update_seq_state(res, slot)
             if res.status != NFS4ERR_DELAY or not handle_state_errors:
                 break
-            if res.resarray[0].sr_status != NFS4ERR_DELAY:
+            if res.resarray[0].sr_status == NFS4ERR_DELAY:
                 # As per errata ID 2006 for RFC 5661 section 15.1.1.3
                 # don't update the slot and sequence ID if the sequence
                 # operation itself receives NFS4ERR_DELAY
-                slot, seq_op = self._prepare_compound(saved_kwargs)
+                do_prepare = False
+            else:
+                do_prepare = True
             time.sleep(delay_time)
         res = self.remove_seq_op(res)
         return res
