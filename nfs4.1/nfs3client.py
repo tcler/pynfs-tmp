@@ -118,8 +118,8 @@ class Mnt3Client(rpc.Client):
         return res.mountinfo.fhandle
 
 class NFS3Client(rpc.Client):
-    def __init__(self, host='localhost', port=None, ctrl_proc=16, summary=None):
-        rpc.Client.__init__(self, NFS_PROGRAM, NFS_V3)
+    def __init__(self, host='localhost', port=None, ctrl_proc=16, summary=None, secureport=False):
+        rpc.Client.__init__(self, NFS_PROGRAM, NFS_V3, secureport=secureport)
         self.portmap = PORTMAPClient(host=host)
         self.mntport = self.portmap.get_port(MOUNT_PROGRAM, MOUNT_V3)
         if not port:
@@ -136,7 +136,7 @@ class NFS3Client(rpc.Client):
 
     def get_pipe(self):
         if not self._pipe or not self._pipe.is_active():
-            self._pipe = self.connect(self.server_address)
+            self._pipe = self.connect(self.server_address, secure=self.secureport)
         return self._pipe
 
     def set_cred(self, credinfo):
