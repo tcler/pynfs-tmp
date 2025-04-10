@@ -28,9 +28,9 @@ SHOW_TRAFFIC = 0
 
 class NFS4Client(rpc.Client, rpc.Server):
     def __init__(self, host=b'localhost', port=2049, minorversion=2, ctrl_proc=16, summary=None, secure=False):
-        rpc.Client.__init__(self, 100003, 4)
-        self.prog = 0x40000000
-        self.versions = [1] # List of supported versions of prog
+        rpc.Client.__init__(self, NFS4_PROGRAM, NFS_V4)
+        self.prog = NFS4_CALLBACK
+        self.versions = [NFS_CB] # List of supported versions of prog
 
         self.minorversion = minorversion
         self.minor_versions = [minorversion]

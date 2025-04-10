@@ -119,11 +119,11 @@ class Mnt3Client(rpc.Client):
 
 class NFS3Client(rpc.Client):
     def __init__(self, host='localhost', port=None, ctrl_proc=16, summary=None):
-        rpc.Client.__init__(self, 100003, 3)
+        rpc.Client.__init__(self, NFS_PROGRAM, NFS_V3)
         self.portmap = PORTMAPClient(host=host)
         self.mntport = self.portmap.get_port(MOUNT_PROGRAM, MOUNT_V3)
         if not port:
-            self.port = self.portmap.get_port(100003, 3)
+            self.port = self.portmap.get_port(NFS_PROGRAM, NFS_V3)
         else:
             self.port = port
 
