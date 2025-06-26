@@ -555,6 +555,7 @@ class SessionRecord(object):
             else:
                 do_prepare = True
             time.sleep(delay_time)
+        slot.inuse = False
         res = self.remove_seq_op(res)
         return res
 
