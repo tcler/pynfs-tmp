@@ -233,14 +233,14 @@ class Environment(testmod.Environment):
         rebooting the server)"""
         if self.opts.serverhelper is None:
             print("Manual operation required on server:")
-            print(args + " and hit ENTER when done")
+            print(args.decode("utf8") + " and hit ENTER when done")
             sys.stdin.readline()
             print("Continuing with test")
         else:
-            cmd = self.opts.serverhelper
+            cmd = os.fsencode(self.opts.serverhelper)
             if self.opts.serverhelperarg:
-                cmd += ' ' + self.opts.serverhelperarg
-            cmd += ' ' + args
+                cmd += b' ' + os.fsencode(self.opts.serverhelperarg)
+            cmd += b' ' + args
             os.system(cmd);
 
     def new_verifier(self):

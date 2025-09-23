@@ -18,7 +18,7 @@ def _getleasetime(sess):
     return res.resarray[-1].obj_attributes[FATTR4_LEASE_TIME]
 
 def _waitForReboot(env):
-    env.serverhelper("reboot")
+    env.serverhelper(b"reboot")
     # Wait until the server is back up.
     # The following blocks until it gets a response,
     # which happens when the server comes back up.
