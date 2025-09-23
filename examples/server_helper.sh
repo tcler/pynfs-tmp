@@ -5,6 +5,18 @@
 # --serverhelper=sample/server_helper.sh --serverhelperarg=SERVERNAME
 # to testserver.py's commandline arguments.
 
+function expire_client() {
+	for f in $(find /proc/fs/nfsd/clients -name info); do
+		if grep -q "^name: \"$1\"" $f; then
+			d=$(dirname $f)
+			echo "expire" >$d/ctl
+			echo "expired $1"
+		fi
+	done
+}
+
+export -f expire_client
+
 server=$1
 command=$2
 shift; shift
@@ -33,5 +45,8 @@ link )
 	;;
 chmod )
 	ssh $server "chmod $1 $2"
+	;;
+expire )
+	ssh root@$server "$(declare -f expire_client); expire_client $1"
 	;;
 esac

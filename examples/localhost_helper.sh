@@ -5,6 +5,15 @@
 # without a password.
 #
 
+function expire_client() {
+	for f in $(find /proc/fs/nfsd/clients -name info); do
+		if grep -q "^name: \"$1\"" $f; then
+			d=$(dirname $f)
+			echo "expire" >$d/ctl
+		fi
+	done
+}
+
 # server argument is ignored here
 server=$1
 command=$2
@@ -25,5 +34,8 @@ link )
 	;;
 chmod )
 	chmod $1 $2
+	;;
+expire )
+	expire_client $1
 	;;
 esac
