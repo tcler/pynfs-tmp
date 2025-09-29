@@ -521,6 +521,155 @@ def testOwnerName(t, env):
         t.fail_support("owner not a supported attribute")
     # print(res.resarray[-1].obj_attributes)
 
+def testArchive(t, env):
+    """GETATTR on "archive" attribute
+
+    FLAGS: getattr all
+    DEPEND: LOOKFILE
+    CODE: GATT11a
+    """
+    c = env.c1
+    ops = c.use_obj(env.opts.usefile)
+    ops += [c.getattr([FATTR4_ARCHIVE])]
+    res = c.compound(ops)
+    check(res, [NFS4_OK, NFS4ERR_ATTRNOTSUPP], "GETATTR(archive)")
+    if res.status == NFS4ERR_ATTRNOTSUPP:
+        t.fail_support("archive not a supported attribute")
+
+def testHidden(t, env):
+    """GETATTR on "hidden" attribute
+
+    FLAGS: getattr all
+    DEPEND: LOOKFILE
+    CODE: GATT11b
+    """
+    c = env.c1
+    ops = c.use_obj(env.opts.usefile)
+    ops += [c.getattr([FATTR4_HIDDEN])]
+    res = c.compound(ops)
+    check(res, [NFS4_OK, NFS4ERR_ATTRNOTSUPP], "GETATTR(hidden)")
+    if res.status == NFS4ERR_ATTRNOTSUPP:
+        t.fail_support("hidden not a supported attribute")
+
+def testMimetype(t, env):
+    """GETATTR on "mimetype" attribute
+
+    FLAGS: getattr all
+    DEPEND: LOOKFILE
+    CODE: GATT11c
+    """
+    c = env.c1
+    ops = c.use_obj(env.opts.usefile)
+    ops += [c.getattr([FATTR4_MIMETYPE])]
+    res = c.compound(ops)
+    check(res, [NFS4_OK, NFS4ERR_ATTRNOTSUPP], "GETATTR(mimetype)")
+    if res.status == NFS4ERR_ATTRNOTSUPP:
+        t.fail_support("mimetype not a supported attribute")
+
+def testQuotaAvailHard(t, env):
+    """GETATTR on "quota avail hard" attribute
+
+    FLAGS: getattr all
+    DEPEND: LOOKFILE
+    CODE: GATT11d
+    """
+    c = env.c1
+    ops = c.use_obj(env.opts.usefile)
+    ops += [c.getattr([FATTR4_QUOTA_AVAIL_HARD])]
+    res = c.compound(ops)
+    check(res, [NFS4_OK, NFS4ERR_ATTRNOTSUPP], "GETATTR(quota_avail_hard)")
+    if res.status == NFS4ERR_ATTRNOTSUPP:
+        t.fail_support("quota_avail_hard not a supported attribute")
+
+def testQuotaAvailSoft(t, env):
+    """GETATTR on "quota avail soft" attribute
+
+    FLAGS: getattr all
+    DEPEND: LOOKFILE
+    CODE: GATT11e
+    """
+    c = env.c1
+    ops = c.use_obj(env.opts.usefile)
+    ops += [c.getattr([FATTR4_QUOTA_AVAIL_SOFT])]
+    res = c.compound(ops)
+    check(res, [NFS4_OK, NFS4ERR_ATTRNOTSUPP], "GETATTR(quota_avail_soft)")
+    if res.status == NFS4ERR_ATTRNOTSUPP:
+        t.fail_support("quota_avail_soft not a supported attribute")
+
+def testQuotaUsed(t, env):
+    """GETATTR on "quota used" attribute
+
+    FLAGS: getattr all
+    DEPEND: LOOKFILE
+    CODE: GATT11f
+    """
+    c = env.c1
+    ops = c.use_obj(env.opts.usefile)
+    ops += [c.getattr([FATTR4_QUOTA_USED])]
+    res = c.compound(ops)
+    check(res, [NFS4_OK, NFS4ERR_ATTRNOTSUPP], "GETATTR(quota_used)")
+    if res.status == NFS4ERR_ATTRNOTSUPP:
+        t.fail_support("quota_used not a supported attribute")
+
+def testSystem(t, env):
+    """GETATTR on "system" attribute
+
+    FLAGS: getattr all
+    DEPEND: LOOKFILE
+    CODE: GATT11g
+    """
+    c = env.c1
+    ops = c.use_obj(env.opts.usefile)
+    ops += [c.getattr([FATTR4_SYSTEM])]
+    res = c.compound(ops)
+    check(res, [NFS4_OK, NFS4ERR_ATTRNOTSUPP], "GETATTR(system)")
+    if res.status == NFS4ERR_ATTRNOTSUPP:
+        t.fail_support("system not a supported attribute")
+
+def testTimeBackup(t, env):
+    """GETATTR on "time backup" attribute
+
+    FLAGS: getattr all
+    DEPEND: LOOKFILE
+    CODE: GATT11h
+    """
+    c = env.c1
+    ops = c.use_obj(env.opts.usefile)
+    ops += [c.getattr([FATTR4_TIME_BACKUP])]
+    res = c.compound(ops)
+    check(res, [NFS4_OK, NFS4ERR_ATTRNOTSUPP], "GETATTR(time_backup)")
+    if res.status == NFS4ERR_ATTRNOTSUPP:
+        t.fail_support("time_backup not a supported attribute")
+
+def testTimeAccessSet(t, env):
+    """GETATTR on "time access set" attribute (write-only)
+
+    FLAGS: getattr all
+    DEPEND: LOOKFILE
+    CODE: GATT11i
+    """
+    c = env.c1
+    ops = c.use_obj(env.opts.usefile)
+    ops += [c.getattr([FATTR4_TIME_ACCESS_SET])]
+    res = c.compound(ops)
+    check(res, [NFS4ERR_INVAL, NFS4ERR_ATTRNOTSUPP], "GETATTR(time_access_set)")
+    if res.status == NFS4ERR_ATTRNOTSUPP:
+        t.fail_support("time_access_set not a supported attribute")
+
+def testTimeModifySet(t, env):
+    """GETATTR on "time modify set" attribute (write-only)
+
+    FLAGS: getattr all
+    DEPEND: LOOKFILE
+    CODE: GATT11j
+    """
+    c = env.c1
+    ops = c.use_obj(env.opts.usefile)
+    ops += [c.getattr([FATTR4_TIME_MODIFY_SET])]
+    res = c.compound(ops)
+    check(res, [NFS4ERR_INVAL, NFS4ERR_ATTRNOTSUPP], "GETATTR(time_modify_set)")
+    if res.status == NFS4ERR_ATTRNOTSUPP:
+        t.fail_support("time_modify_set not a supported attribute")
 
 ####################################################
 
